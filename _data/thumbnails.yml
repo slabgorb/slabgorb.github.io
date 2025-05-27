@@ -1,0 +1,31 @@
+wmata:
+  - title: "WMATA Image 1"
+    path: "/assets/images/wmata/image1.jpg"
+    description: "Description of WMATA Image 1"
+  - title: "WMATA Image 2"
+    path: "/assets/images/wmata/image2.jpg"
+    description: "Description of WMATA Image 2"
+
+portraits:
+  - title: "Portrait 1"
+    path: "/assets/images/portraits/portrait1.jpg"
+    description: "Description of Portrait 1"
+  - title: "Portrait 2"
+    path: "/assets/images/portraits/portrait2.jpg"
+    description: "Description of Portrait 2"
+
+plants:
+  - title: "Plant 1"
+    path: "/assets/images/plants/plant1.jpg"
+    description: "Description of Plant 1"
+  - title: "Plant 2"
+    path: "/assets/images/plants/plant2.jpg"
+    description: "Description of Plant 2"
+
+mtv:
+  - title: "MTV Image 1"
+    path: "/assets/images/mtv/mtv1.jpg"
+    description: "Description of MTV Image 1"
+  - title: "MTV Image 2"
+    path: "/assets/images/mtv/mtv2.jpg"
+    description: "Description of MTV Image 2"

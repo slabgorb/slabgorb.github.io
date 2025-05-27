@@ -1,0 +1,27 @@
+title: Jekyll Thumbnail Gallery
+description: A static website showcasing various sets of thumbnails in different categories.
+baseurl: ""
+url: "http://yourdomain.com"
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+# Custom settings
+thumbnails:
+  wmata:
+    title: "WMATA"
+    description: "Thumbnails of WMATA related images."
+  portraits:
+    title: "Portraits"
+    description: "Thumbnails of portrait images."
+  plants:
+    title: "Plants"
+    description: "Thumbnails of plant images."
+  mtv:
+    title: "MTV"
+    description: "Thumbnails of MTV related images."

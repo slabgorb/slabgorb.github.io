@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<div class="home">
+    {%- if page.title -%}
+        <h1 class="page-heading">{{ page.title }}</h1>
+    {%- endif -%}
+    {% assign image_files = site.static_files %}
+    {% assign images = image_files | map: "path" %}
+    {{ content }}
+    {% for image in images %}
+        {% if image contains 'wmata' %} 
+            {% assign imgset = imgset | push: image %}
+        {% endif %}
+    {% endfor %}
+    {% assign randimg = imgset | sample %}
+
+    {% if randimg %}
+        <img src="{{ randimg | relative_url }}" alt="Random Image" class="home-image">
+    {% else %}
+        <p>No images available.</p>
+    {% endif %}
+
+</div>

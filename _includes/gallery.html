@@ -1,0 +1,37 @@
+<style>
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.image {
+    flex: 1 1 calc(33.333% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+}
+.image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+</style>
+
+
+{% assign image_files = site.static_files %}
+{% assign images = image_files | map: "path" %}
+<div class="gallery">
+    {% for image in images %}
+    {% if image contains include.gallery_tag %}
+    {% assign image_title = image | split: '/' | last | replace: ".jpg", "" |
+    replace: "_", " " %}
+    <div class="image">
+        <a href="{{ image }}" target="_blank" data-lightbox="gallery" data-title="{{ image_title }}">
+            <img src="{{ image }}" alt="{{ image_title }}" />
+            <p>{{ image_title }}</p>
+    
+        </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>

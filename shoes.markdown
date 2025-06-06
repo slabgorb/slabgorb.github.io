@@ -12,9 +12,15 @@ permalink: /shoes/
     {% if image contains 'shoes' %}
         {% assign image_title = image | split: '/' | last | replace: ".jpg", "" | replace: "_", " " %}
         <div class="image">
-            <img src="{{ image }}" alt="{{ image_title }}" />
-            <p>{{ image_title }}</p>
+
+            <a href="{{ image }}" class="lightbox" data-lightbox="gallery" target="_blank">
+                <img src="{{ image }}" alt="{{ image_title }}" loading="lazy" />
+                <p>{{ image_title }}</p>
+            </a>
+
         </div>
     {% endif %}
+
 {% endfor %}
+
 </div>

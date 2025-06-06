@@ -1,0 +1,33 @@
+// Main theme styles
+
+@import "{{ site.theme }}";
+
+$background-color: #333333;
+$text-color: #ddf1ff;
+$link-color: #0080ff;
+
+body {
+    background-color: $background-color;
+    color: $text-color;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+// Links
+a {
+    color: $link-color;
+    text-decoration: none;
+    
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// Basic container
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}

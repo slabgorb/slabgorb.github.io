@@ -23,7 +23,7 @@ email: slabgorb@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   The artwork of Keith Avery, a digital artist and designer.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://slabgorb.com" # the base hostname & protocol for your site, e.g. http://example.com
 bsky_username: slabgorb.com
 site.static_files:
   - assets/css
@@ -41,7 +41,8 @@ site.static_files:
 theme: minima
 
 plugins:
-  - jekyll-feed
+  - jekyll-thumbnail-img
+  
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to

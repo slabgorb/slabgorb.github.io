@@ -23,7 +23,8 @@
 <div class="gallery">
     {% for image in images %}
     {% if image contains include.gallery_tag %}
-    {% assign image_title = image | split: '/' | last | replace: ".jpg", "" |
+    {% assign image_title = image | split: '/' | last | split: '.' | first %}
+    {% assign image_title = image_title |
     replace: "_", " " %}
     <div class="image">
         <a href="{{ image }}" target="_blank" data-lightbox="gallery" data-title="{{ image_title }}">

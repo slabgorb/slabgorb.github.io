@@ -20,6 +20,56 @@
 
 {% assign image_files = site.static_files %}
 {% assign images = image_files | map: "path" %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.gallery .image img').forEach(function(img) {
+        img.addEventListener('click', function(e) {
+            e.preventDefault();
+            // If already fullscreen, shrink back
+            if (img.classList.contains('fullscreen')) {
+                img.classList.remove('fullscreen');
+                document.body.classList.remove('no-scroll');
+            } else {
+                // Remove fullscreen from any other image
+                document.querySelectorAll('.gallery .image img.fullscreen').forEach(function(otherImg) {
+                    otherImg.classList.remove('fullscreen');
+                });
+                img.classList.add('fullscreen');
+                document.body.classList.add('no-scroll');
+            }
+        });
+    });
+    // Optional: exit fullscreen on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.gallery .image img.fullscreen').forEach(function(img) {
+                img.classList.remove('fullscreen');
+            });
+            document.body.classList.remove('no-scroll');
+        }
+    });
+});
+</script>
+<style>
+.gallery .image img.fullscreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    background: #fff;
+    border-radius: 12px;
+    cursor: zoom-out;
+}
+body.no-scroll {
+    overflow: hidden;
+}
+</style>
 <div class="gallery">
     {% for image in images %}
     {% if image contains include.gallery_tag %}

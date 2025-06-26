@@ -1,23 +1,11 @@
-<style>
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.image {
-    flex: 1 1 calc(33.333% - 20px);
-    box-sizing: border-box;
-    text-align: center;
-}
-.image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
 
-</style>
+{% assign style_files = site.static_files | where: "path", "/assets/css/gallery.css" %}
+{% if style_files.size > 0 %}
+<link rel="stylesheet" href="{{ style_files[0].path | relative_url }}" />
+{% endif %}
 
-
+{% assign include = include | default: {} %}
+{% assign gallery_tag = include.gallery_tag | default: "gallery" %}
 {% assign image_files = site.static_files %}
 {% assign images = image_files | map: "path" %}
 <script>

@@ -1,0 +1,23 @@
+# Cloudflare Worker that serves the built Jekyll site (_site) from R2.
+# Deploy with: ./deploy.sh   (builds, uploads to R2, then `wrangler deploy`)
+name = "slabgorb-site"
+main = "worker/index.js"
+compatibility_date = "2025-06-01"
+account_id = "a55aafa9b0691f828cd6864be28c1674"
+workers_dev = false
+
+# R2 bucket holding the built site. Bound as `env.BUCKET` in the Worker.
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "slabgorb"
+
+# Serve on the apex and www. Both require slabgorb.com to be a zone on this
+# Cloudflare account. `custom_domain = true` makes Cloudflare manage the DNS
+# record + edge cert for each hostname automatically.
+[[routes]]
+pattern = "slabgorb.com"
+custom_domain = true
+
+[[routes]]
+pattern = "www.slabgorb.com"
+custom_domain = true

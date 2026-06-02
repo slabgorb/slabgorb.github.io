@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gamebox :: slabgorb.com</title>
+<meta name="description" content="Gamebox — a self-hosted plugin host for two-player turn-based games, built by Keith Avery. Adding a new game is one folder and one registry line." />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <a class="mh-logo" href="../index.html" style="text-decoration:none;">
+      <div class="mh-mug"><img src="../img/portraits/Self_Portrait_2025_April.jpg" alt="Keith Avery" /></div>
+      <div>
+        <p class="logo">slabgorb<span class="x">.com</span></p>
+        <p class="sub">the home page of <b>keith avery</b> :: engineer &amp; artist</p>
+      </div>
+    </a>
+    <div class="mh-meta" aria-hidden="true">
+      <div class="row"><span>SECTION</span><span>projects</span></div>
+      <div class="row"><span>FILE</span><span>gamebox</span></div>
+      <div class="row"><span>STATUS</span><span>active</span></div>
+      <div class="avail"><span class="led"></span> OPEN TO WORK</div>
+    </div>
+  </header>
+
+  <nav class="strip">
+    <div class="crumb">
+      <a class="back" href="../index.html">« HOME</a>
+      <a href="../index.html#projects">PROJECTS</a>
+      <span class="sep">/</span>
+      <span class="here">Gamebox</span>
+    </div>
+  </nav>
+
+  <div class="mod pj-hero" data-screen-label="project-hero">
+    <div class="mod-hd hd-rust">GAMEBOX.PROJ <span class="m">// deep dive</span></div>
+    <div class="mod-bd">
+      <h1 class="pj-name">Gamebox</h1>
+      <p class="pj-tag">// a self-hosted plugin host for two-player turn-based games</p>
+      <p class="pj-sub">A small, sharp game host that runs on a private Tailscale network for a curated roster of friends and family — not a SaaS, not multi-tenant, personal-use by design. The host owns authentication, the roster, lobby routing, and per-game state; each game is a self-contained plugin that owns its rules and its client UI. Adding a new game is <b>one folder and one registry line</b>. Seven games ship today — several playable against <b>AI opponents with personas</b> — over a shared dice tray, shared card primitives, and an LLM-bot tournament harness underneath.</p>
+      <div class="chiprow">
+        <span class="chip live">Active</span>
+        <span class="chip role">Creator · Solo</span>
+        <span class="chip year">2026</span>
+        <span class="chip">Self-hosted</span>
+      </div>
+      <div class="linkrow">
+        <a class="btn go" href="https://github.com/slabgorb/gamebox" target="_blank" rel="noopener">★ github.com/slabgorb/gamebox</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mod" style="margin-top:10px;" data-screen-label="screenshot">
+    <div class="mod-hd hd-olive">FROM A SESSION <span class="m">// risk · turn one · vs. major robert</span></div>
+    <div class="mod-bd">
+      <figure class="shot">
+        <img src="../img/gamebox/risk.jpg" alt="Gamebox Risk — an antique-map world board at the opening turn, playing against the AI general Major Robert, who is thinking through his move in the corner" loading="lazy" />
+        <figcaption>// Turn one of Risk against <b>Major Robert</b>, one of the LLM-backed generals. Keith has mustered his levies and the general is thinking through his own deployment — opponents like him take a real turn and trade table-talk between moves. The board, continent bonuses, and chronicle are all server-authoritative; the other side is a model, not a script.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="pj-cols" style="margin-top:10px;">
+    <div class="col">
+
+      <div class="mod">
+        <div class="mod-hd hd-slate">THE IDEA</div>
+        <div class="mod-bd prose">
+          <p>I wanted to play turn-based board and card games with family across the country — without renting them out to a platform, juggling accounts, or trusting a third party with the roster. So Gamebox is deliberately <span class="hl">not a product</span>: it's a single-process server that runs on my own hardware, reachable only over a private Tailscale network, for a hand-picked list of people.</p>
+          <p>The interesting constraint is extensibility. Rather than hard-code each game, the host defines a clean <b>plugin contract</b> and stays out of the way. The host knows about identity, the roster, the lobby, and how to store a blob of game state; it knows nothing about Scrabble racks or backgammon pips. That lives in the plugins.</p>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-teal">THE ARCHITECTURE</div>
+        <div class="mod-bd prose">
+          <p>A strict split between <b>host</b> and <b>plugins</b>, with a couple of shared client components in the middle so games don't reinvent dice and cards.</p>
+          <div class="arch">
+            <div class="archbox accent"><span class="at">host</span><span class="ad">auth · roster · lobby · SSE · state store</span></div>
+            <div class="archbox"><span class="at">plugins</span><span class="ad">rules engine + browser client, per game</span></div>
+            <div class="archbox"><span class="at">shared</span><span class="ad">&lt;dice-tray&gt; + card primitives</span></div>
+          </div>
+          <p style="margin-top:11px;">Each game's state is a single JSON column in SQLite. The host is <span class="hl">single-process and better-sqlite3 is synchronous</span>, so state writes can't race — there is no lock dance, no transaction retry loop, no eventual-consistency story to reason about. It's the kind of simplification you can only make because the scale is honest: two players, a small roster, one box.</p>
+          <p>Real-time updates ride <b>Server-Sent Events</b> — a game-scoped stream fires an <code>update</code> the instant state changes, which is all a turn-based game needs and far less machinery than a WebSocket layer. Pairings are canonical: the host always assigns <code>playerA = min(userA, userB)</code> and <code>playerB = max(...)</code>, and a UNIQUE constraint makes a duplicate active game between the same pair structurally impossible.</p>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-plum">THE PLUGIN CONTRACT</div>
+        <div class="mod-bd prose">
+          <p>A plugin is a plain ESM object. Implement four pure functions and declare a client directory, and the host wires up the rest — lobby entry, routing, state storage, and the SSE stream.</p>
+          <div class="archflow">
+            <div class="archstep"><span class="sn">1</span><span class="sx"><b>initialState</b> — <code>({ participants, rng }) → state</code>. Deal the hand, set the board.</span></div>
+            <div class="archstep"><span class="sn">2</span><span class="sx"><b>applyAction</b> — <code>({ state, action, actorId, rng }) → { state, ended, error?, scoreDelta? }</code>. All rules and validation live server-side; the client is never trusted.</span></div>
+            <div class="archstep"><span class="sn">3</span><span class="sx"><b>publicView</b> — <code>({ state, viewerId }) → redacted_state</code>. Hidden information (your opponent's rack, the stock) is removed per viewer.</span></div>
+            <div class="archstep"><span class="sn">4</span><span class="sx"><b>auxRoutes</b> — optional per-game endpoints mounted under <code>/api/games/:id/&lt;name&gt;</code> for things like a dictionary check.</span></div>
+          </div>
+          <p style="margin-top:11px;">Then register it in <code>src/plugins/index.js</code> — one import, one array entry — and the host auto-mounts the browser client at <code>/play/&lt;id&gt;/:gameId/</code>. That's the whole ceremony: <span class="hl">a folder and a line</span>.</p>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-rust">ENGINEERING JUDGEMENT</div>
+        <div class="mod-bd prose">
+          <p>Most of the good decisions here are about <em>not</em> building things:</p>
+          <ul>
+            <li><b>Synchronous SQLite over a database tier.</b> A single process with synchronous writes removes an entire class of concurrency bugs for free. The right tool for two players is not a connection pool.</li>
+            <li><b>SSE over WebSockets.</b> Turn-based games push, they don't chat. A one-way event stream is less code and less failure surface than a duplex socket.</li>
+            <li><b>Server-authoritative rules, always.</b> Every legality check — multiset balance, set legality, the initial-meld threshold, joker harvest — runs in <code>applyAction</code> on the server and is validated atomically. The client renders; it never decides.</li>
+            <li><b>Share the primitives, not the games.</b> A Vite-built <code>&lt;dice-tray&gt;</code> Web Component and a shared card deck serve every plugin that needs them, so Backgammon and Buraco don't each grow their own dice.</li>
+            <li><b>Auth by trusting one header.</b> In production Cloudflare Access injects the authenticated email; the app trusts that single header and 403s anyone off the roster. Locally, a <code>DEV_USER</code> flag bypasses it. No session store, no password reset flow.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-mud">PLAYING THE BOTS</div>
+        <div class="mod-bd prose">
+          <p>Several games ship with <b>AI opponents</b> — LLM-backed players with personas that take a real turn and trade a little table-talk: <em>Major Robert</em> marshalling armies in Risk, <em>The Tortoise</em> and <em>The Bully</em> chasing pawns in Sorry. Each plays the exact same plugin a human does, with a model on the other side of the contract.</p>
+          <p>Behind Risk's generals sits a <b>bot-tournament harness</b>: run N headless games between two model-backed players, alternate sides game-to-game to cancel first-move advantage, and report win-rates with <span class="hl">Wilson 95% confidence intervals</span> rather than a naive percentage. Backends are pluggable — <code>claude:&lt;model&gt;</code> via the CLI, <code>ollama:&lt;tag&gt;</code> over HTTP — and every turn is logged to JSONL: readable transcripts now, training data later. It's the part that turns "the bot feels smarter" into a number with error bars.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col">
+
+      <div class="mod">
+        <div class="mod-hd hd-rust">BY THE NUMBERS</div>
+        <div class="mod-bd">
+          <div class="statgrid">
+            <div class="stat"><span class="n">7</span><span class="l">games shipped</span></div>
+            <div class="stat"><span class="n">520</span><span class="l">commits</span></div>
+            <div class="stat"><span class="n">196</span><span class="l">test files</span></div>
+            <div class="stat"><span class="n">2</span><span class="l">players / game</span></div>
+            <div class="stat"><span class="n">0</span><span class="l">state-write races</span></div>
+            <div class="stat"><span class="n">95%</span><span class="l">Wilson-CI bot eval</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-mud">THE GAMES</div>
+        <div class="mod-bd prose">
+          <ul style="margin:0; padding-left:15px;">
+            <li><b>Words</b> — Words With Friends + a Scrabble variant, ENABLE2K dictionary</li>
+            <li><b>Rummikub</b> — 1998 Pressman edition, 2 jokers, 30-pt initial meld</li>
+            <li><b>Cribbage</b> — 121-pt match, pegging + show, walnut peg board</li>
+            <li><b>Backgammon</b> — match play, doubling cube + Crawford rule</li>
+            <li><b>Buraco</b> — 2-player Brazilian rules, 2 decks + 4 jokers, 3000-pt match</li>
+            <li><b>Sorry</b> — classic card-driven pawn race, with board slides and bumps</li>
+            <li><b>Risk</b> — world domination against AI generals, plus a bot-tournament harness</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-teal">STACK</div>
+        <div class="mod-bd">
+          <span class="lbl">// host</span>
+          <div class="prior"><code>Node 20+</code><code>Express</code><code>better-sqlite3</code><code>ESM</code><code>js-yaml</code><code>SSE</code></div>
+          <hr class="dot" />
+          <span class="lbl">// client</span>
+          <div class="prior"><code>Vanilla JS</code><code>Web Components</code><code>Vite</code><code>React 19</code><code>Three.js</code><code>Rapier</code></div>
+          <hr class="dot" />
+          <span class="lbl">// infra</span>
+          <div class="prior"><code>Cloudflare Access</code><code>Tailscale</code><code>launchd</code><code>just</code></div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-slate">THE REPO</div>
+        <div class="mod-bd prose">
+          <ul style="margin:0; padding-left:15px; font-size:12.5px;">
+            <li><a href="https://github.com/slabgorb/gamebox" target="_blank" rel="noopener">gamebox</a> — host + all game plugins + shared libs</li>
+          </ul>
+          <p style="margin-top:9px; font-size:12.5px;">A single monorepo: the host, every plugin under <code>plugins/</code>, the shared <code>&lt;dice-tray&gt;</code> and card primitives, the ops <code>justfile</code>, and the Risk harness all live together.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mod" style="margin-top:10px;" data-screen-label="in-play">
+    <div class="mod-hd hd-olive">AT THE TABLE <span class="m">// sorry · two players · cabinet rules</span></div>
+    <div class="mod-bd">
+      <figure class="shot">
+        <img src="../img/gamebox/sorry.jpg" alt="Gamebox Sorry — a wooden cabinet-style board mid-game, with the AI opponent The Tortoise thinking and a Sorry! card drawn" loading="lazy" />
+        <figcaption>// A Sorry match against <b>The Tortoise</b> — “the slidy diagonal chasing game,” rendered as a varnished cabinet board. A drawn Sorry! card offers to bump any opponent pawn back to Start; the opponent is an LLM taking its turn, not a script.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="frow"><div>© 1999–2026 KEITH AVERY · AI-ASSISTED, HUMAN-APPROVED · <a href="mailto:slabgorb@gmail.com">SLABGORB@GMAIL.COM</a></div></div>
+    <div class="uc"><a href="../index.html" style="color:#9ab6e2;">« BACK TO HOME</a></div>
+  </footer>
+
+</div>
+</body>
+</html>

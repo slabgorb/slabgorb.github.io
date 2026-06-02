@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SideQuest :: slabgorb.com</title>
+<meta name="description" content="SideQuest — an AI Dungeon Master. A genre-agnostic, Claude-powered narrator engine for tabletop RPGs, built by Keith Avery." />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <a class="mh-logo" href="../index.html" style="text-decoration:none;">
+      <div class="mh-mug"><img src="../img/portraits/Self_Portrait_2025_April.jpg" alt="Keith Avery" /></div>
+      <div>
+        <p class="logo">slabgorb<span class="x">.com</span></p>
+        <p class="sub">the home page of <b>keith avery</b> :: engineer &amp; artist</p>
+      </div>
+    </a>
+    <div class="mh-meta" aria-hidden="true">
+      <div class="row"><span>SECTION</span><span>projects</span></div>
+      <div class="row"><span>FILE</span><span>sidequest</span></div>
+      <div class="row"><span>STATUS</span><span>playtest</span></div>
+      <div class="avail"><span class="led"></span> OPEN TO WORK</div>
+    </div>
+  </header>
+
+  <nav class="strip">
+    <div class="crumb">
+      <a class="back" href="../index.html">« HOME</a>
+      <a href="../index.html#projects">PROJECTS</a>
+      <span class="sep">/</span>
+      <span class="here">SideQuest</span>
+    </div>
+  </nav>
+
+  <div class="mod pj-hero" data-screen-label="project-hero">
+    <div class="mod-hd hd-rust">SIDEQUEST.PROJ <span class="m">// deep dive</span></div>
+    <div class="mod-bd">
+      <h1 class="pj-name">SideQuest</h1>
+      <p class="pj-tag">// an AI dungeon master — any genre, real-time, multiplayer</p>
+      <p class="pj-sub">A narrator engine that runs tabletop-style RPGs in any genre, powered by a Claude narrator invoked stateless per turn. Players connect from a browser, roll up a character through genre-driven scenes, and explore living worlds — with real-time image generation, streaming narration, adaptive music, and submit-and-wait multiplayer. This is my after-hours obsession, and it's the most ambitious thing I've built solo.</p>
+      <div class="chiprow">
+        <span class="chip wip">In Playtest</span>
+        <span class="chip role">Creator · Solo</span>
+        <span class="chip year">2026</span>
+        <span class="chip live">Open source</span>
+      </div>
+      <div class="linkrow">
+        <a class="btn go" href="https://github.com/slabgorb/sidequest" target="_blank" rel="noopener">★ github.com/slabgorb/sidequest</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mod" style="margin-top:10px;" data-screen-label="screenshot">
+    <div class="mod-hd hd-olive">FROM A SESSION <span class="m">// character creation · space opera</span></div>
+    <div class="mod-bd">
+      <figure class="shot">
+        <img src="../img/sidequest/world-select.jpg" alt="SideQuest character-creation screen — naming a character and choosing the Perseus Cloud space-opera world, with a generated cityscape" loading="lazy" />
+        <figcaption>// Rolling up “Zanzibar Jones” and choosing a world. The cityscape is generated on-device per scene; the world list, descriptor chips and lore text are all driven by the selected genre pack.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="mod" style="margin-top:10px;" data-screen-label="alpha-cta">
+    <div class="mod-hd hd-rust">JOIN THE ALPHA <span class="m">// private playtest</span></div>
+    <div class="mod-bd alpha-bd">
+      <div class="alpha-inner">
+        <div class="alpha-txt">
+          <p class="alpha-h"><span class="led"></span> SideQuest is in private playtest.</p>
+          <p class="alpha-s">Forever-DM, curious player, or just want to watch a Claude narrator run a dogfight? I'm onboarding alpha testers in <b>small waves</b> — bring a playgroup or fly solo.</p>
+        </div>
+        <a class="btn go alpha-btn" href="mailto:slabgorb@gmail.com?subject=SideQuest%20alpha%20playtest&body=Hi%20Keith%20%E2%80%94%20I%27d%20like%20to%20get%20in%20on%20the%20SideQuest%20alpha.%20%28Tell%20Keith%20a%20bit%20about%20yourself%3A%20solo%20or%20a%20group%3F%20favourite%20genre%3F%29">✉ Request alpha access</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pj-cols" style="margin-top:10px;">
+    <div class="col">
+
+      <div class="mod">
+        <div class="mod-hd hd-slate">THE IDEA</div>
+        <div class="mod-bd prose">
+          <p>A great tabletop game master improvises a world, voices a cast of characters, adjudicates the rules, and keeps the pacing taut — all at once. SideQuest asks whether a language model can do that job convincingly, for one player or a whole party, in <b>any genre you can write down</b>.</p>
+          <p>The answer is a <span class="hl">genre-agnostic engine</span>: the rules, tropes, character creation, audio, visual style, faction agendas and even invented languages all live in declarative <b>genre packs</b>. Swap the pack and the same engine runs a Leone-style spaghetti western or a cosy Edwardian murder mystery.</p>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-teal">THE ARCHITECTURE</div>
+        <div class="mod-bd prose">
+          <p>SideQuest is a <b>five-repo ecosystem</b> coordinated by an orchestrator, so the game engine, the client, and the GPU-bound media work can each evolve and scale on their own terms.</p>
+          <div class="arch">
+            <div class="archbox"><span class="at">server</span><span class="ad">Python · FastAPI · WebSocket · narrator</span></div>
+            <div class="archbox"><span class="at">ui</span><span class="ad">React 19 · audio engine · 3D dice</span></div>
+            <div class="archbox"><span class="at">daemon</span><span class="ad">on-device image + music gen</span></div>
+            <div class="archbox"><span class="at">content</span><span class="ad">genre-pack YAML, audio, worlds</span></div>
+          </div>
+          <p style="margin-top:11px;">The <b>narrator</b> is the heart of it. Each turn is a bounded, <span class="hl">stateless Claude call</span> — no resumed session — with prompt caching on the stable system zones and <b>native tool-use</b> for every mechanical change: the narrator structurally <em>cannot</em> describe picking up a sword without invoking the tool that adds it to your inventory. Models are routed per call: Haiku for classification, Sonnet for narration, Opus for the moments that matter.</p>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-plum">A TURN, END TO END</div>
+        <div class="mod-bd prose">
+          <div class="archflow">
+            <div class="archstep"><span class="sn">1</span><span class="sx">Player types an action; it's <b>sanitized at the protocol boundary</b> before it reaches any prompt.</span></div>
+            <div class="archstep"><span class="sn">2</span><span class="sx">A single Haiku call <b>classifies intent</b> — exploration, combat, or chase — with no narrator entanglement.</span></div>
+            <div class="archstep"><span class="sn">3</span><span class="sx">The <b>unified narrator</b> generates prose and emits mechanical patches as validated tool calls; results merge with tool values taking precedence.</span></div>
+            <div class="archstep"><span class="sn">4</span><span class="sx">Narration streams to the client token-by-token; a <b>dual-track tension engine</b> decides whether it arrives instantly or builds dramatically.</span></div>
+            <div class="archstep"><span class="sn">5</span><span class="sx">In parallel and off the critical path, the <b>media daemon</b> renders a scene image and cues mood-based music — text never waits on the GPU.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-rust">ENGINEERING JUDGEMENT</div>
+        <div class="mod-bd prose">
+          <p>The decisions I'm proudest of are the unglamorous ones:</p>
+          <ul>
+            <li><b>Ported the backend off Rust, back to Python.</b> A 12-crate Rust workspace was rewritten to Python once it was clear the iteration speed mattered more than the runtime — crate boundaries became package boundaries, serde structs became pydantic models, tracing spans were carried over verbatim.</li>
+            <li><b>Fail-loud, no silent fallback.</b> Missing an API key or a database URL stops the process; "it rendered" can never be a lie.</li>
+            <li><b>Forensics telemetry as a lie-detector.</b> Per-turn metrics and canonical state projections are written inside the same transaction as the narration they describe, so the GM dashboard has mechanical ground truth.</li>
+            <li><b>Every decision is an ADR.</b> 115+ architecture decision records document not just what was built, but why — and what was reversed.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-plum">THE NARRATOR'S SOUL</div>
+        <div class="mod-bd prose">
+          <p class="epigraph">The AI agents follow a written doctrine — <b>SOUL.md</b> — that reads less like a config file and more like a great game master's philosophy. A few of its rules:</p>
+          <div class="soul">
+            <div class="pr"><span class="pn">The Zork Problem</span><span class="pd">Every prior digital RPG capped you at a finite verb set — "GET LAMP," "attack / flee / use item." A natural-language narrator removes the ceiling: you can attempt anything you can articulate. This is the whole reason the system exists.</span></div>
+            <div class="pr"><span class="pn">Agency</span><span class="pd">The player controls their character. The narrator describes the world, never the player's response to it. The test: if a reply has the player doing something they didn't ask to do, it's wrong.</span></div>
+            <div class="pr"><span class="pn">Living World</span><span class="pd">NPCs act on their own goals — especially villains. They scheme, leave, lie, or die without permission. The world doesn't pause when the players step away.</span></div>
+            <div class="pr"><span class="pn">Cost Scales with Drama</span><span class="pd">Computational effort follows narrative weight. A quiet walk through town is cheap; a charmed player perceiving a false reality earns the extra cycles.</span></div>
+            <div class="pr"><span class="pn">Yes, And</span><span class="pd">When a player invents something that fits the genre and grants no mechanical advantage, canonize it. Emerge from a suspension pod and you've just created a suspension-pod facility others can visit. The world grows from play.</span></div>
+            <div class="pr"><span class="pn">Cut the Dull Bits</span><span class="pd">Chekhov's gun, for scenes. If a scene doesn't force a decision, reveal something, or raise stakes — smash-cut past it. No complication, no scene.</span></div>
+            <div class="pr"><span class="pn">The Guitar Solo</span><span class="pd">When one player gets the spotlight, the rest of the table must never become a silent audience. Keep the solo short, keep the soloist reachable, give everyone else a part.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-mud">PRODUCT DIRECTION</div>
+        <div class="mod-bd prose">
+          <p>The sharpest insight didn't come from the code — it came from watching who actually uses it. <b>The paying customer isn't the player; it's the dungeon master.</b> A forever-DM builds a world, brings their own playgroup, and the table shows up — exactly like a private tabletop game. That reframes the "internal" tooling (the world builder, the GM dashboard, the observability layer) as <span class="hl">the actual product surface</span>, not scaffolding.</p>
+          <p>From there, a creator economy: DMs author worlds with AI as co-author — collapsing time-to-playable from months to an evening — their playgroups pay to play, and standout creators earn through a partner program. The model I'm proudest of is <b>single-hop royalties netted against your own play costs</b>: if your world catches on, the royalties it earns first pay down your own table's bill, so a popular world effectively plays for free.</p>
+          <p>And the positioning is clean. The AI-DM field forked in two — <b>freeform but rule-less</b> (AI Dungeon) versus <b>real mechanics but locked to D&D 5e</b> (Friends &amp; Fables). SideQuest is the only one with open natural-language action <em>and</em> a real mechanical scaffold <em>and</em> a swappable, non-5e rulebook — plus concurrent, asymmetric-information multiplayer a chat-room bot physically cannot do.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col">
+
+      <div class="mod">
+        <div class="mod-hd hd-rust">BY THE NUMBERS</div>
+        <div class="mod-bd">
+          <div class="statgrid">
+            <div class="stat"><span class="n">5</span><span class="l">repo ecosystem</span></div>
+            <div class="stat"><span class="n">18</span><span class="l">playable worlds</span></div>
+            <div class="stat"><span class="n">115+</span><span class="l">ADRs</span></div>
+            <div class="stat"><span class="n">44</span><span class="l">message types</span></div>
+            <div class="stat"><span class="n">50+</span><span class="l">OTEL spans</span></div>
+            <div class="stat"><span class="n">3</span><span class="l">models routed</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-mud">GENRES</div>
+        <div class="mod-bd prose">
+          <ul style="margin:0; padding-left:15px;">
+            <li><b>Caverns &amp; Claudes</b> — high-fantasy dungeon crawl</li>
+            <li><b>Space Opera</b> — sci-fi adventure</li>
+            <li><b>Spaghetti Western</b> — morally grey anti-heroes</li>
+            <li><b>Tea &amp; Murder</b> — cosy Edwardian whodunit</li>
+            <li><b>Elemental Harmony</b> — martial arts magic</li>
+            <li><b>Mutant Wasteland</b> — post-apocalyptic</li>
+            <li><b>Road Warrior</b> — vehicle subcultures</li>
+            <li><b>Neon Dystopia</b> · <b>Pulp Noir</b> · <b>Heavy Metal</b> · <b>Wry Whimsy</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-teal">STACK</div>
+        <div class="mod-bd">
+          <span class="lbl">// engine</span>
+          <div class="prior"><code>Python 3.12</code><code>FastAPI</code><code>uvicorn</code><code>pydantic v2</code><code>WebSockets</code><code>Anthropic SDK</code><code>PostgreSQL</code><code>Alembic</code><code>OpenTelemetry</code></div>
+          <hr class="dot" />
+          <span class="lbl">// client</span>
+          <div class="prior"><code>React 19</code><code>TypeScript</code><code>Vite</code><code>Tailwind</code><code>Three.js</code><code>Rapier</code></div>
+          <hr class="dot" />
+          <span class="lbl">// media &amp; infra</span>
+          <div class="prior"><code>Z-Image (MLX)</code><code>ACE-Step</code><code>Cloudflare R2</code><code>Jaeger</code></div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-slate">THE REPOS</div>
+        <div class="mod-bd prose">
+          <ul style="margin:0; padding-left:15px; font-size:12.5px;">
+            <li><a href="https://github.com/slabgorb/sidequest" target="_blank" rel="noopener">sidequest</a> — orchestrator &amp; docs</li>
+            <li><a href="https://github.com/slabgorb/sidequest-server" target="_blank" rel="noopener">sidequest-server</a> — game engine</li>
+            <li><a href="https://github.com/slabgorb/sidequest-ui" target="_blank" rel="noopener">sidequest-ui</a> — React client</li>
+            <li><a href="https://github.com/slabgorb/sidequest-daemon" target="_blank" rel="noopener">sidequest-daemon</a> — media services</li>
+            <li><a href="https://github.com/slabgorb/sidequest-content" target="_blank" rel="noopener">sidequest-content</a> — genre packs</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mod" style="margin-top:10px;" data-screen-label="in-play">
+    <div class="mod-hd hd-olive">IN PLAY <span class="m">// solo · space opera · the kestrel</span></div>
+    <div class="mod-bd">
+      <figure class="shot">
+        <img src="../img/sidequest/in-play.jpg" alt="SideQuest in-session view — streaming narration on the left, the live Knowledge Journal tracking facts on the right, with an HP bar and ship readout" loading="lazy" />
+        <figcaption>// A quiet turn aboard the ship Kestrel. Narration streams on the left with inline “knowledge gained” markers; the Journal on the right logs what the player has learned, tagged PLACE / PERSON / LORE. That clan-blue mug “jittering once, at no discernible impact” is a baited hook straight out of the design soul — a coal detail waiting to become a diamond if the player bites.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="frow"><div>© 1999–2026 KEITH AVERY · AI-ASSISTED, HUMAN-APPROVED · <a href="mailto:slabgorb@gmail.com">SLABGORB@GMAIL.COM</a></div></div>
+    <div class="uc"><a href="../index.html" style="color:#9ab6e2;">« BACK TO HOME</a></div>
+  </footer>
+
+</div>
+</body>
+</html>

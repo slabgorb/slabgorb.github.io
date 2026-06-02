@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pennyfarthing :: slabgorb.com</title>
+<meta name="description" content="Pennyfarthing — a Claude Code agent-orchestration framework built by Keith Avery." />
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <!-- masthead -->
+  <header class="masthead">
+    <a class="mh-logo" href="../index.html" style="text-decoration:none;">
+      <div class="mh-mug"><img src="../img/portraits/Self_Portrait_2025_April.jpg" alt="Keith Avery" /></div>
+      <div>
+        <p class="logo">slabgorb<span class="x">.com</span></p>
+        <p class="sub">the home page of <b>keith avery</b> :: engineer &amp; artist</p>
+      </div>
+    </a>
+    <div class="mh-meta" aria-hidden="true">
+      <div class="row"><span>SECTION</span><span>projects</span></div>
+      <div class="row"><span>FILE</span><span>pennyfarthing</span></div>
+      <div class="row"><span>STATUS</span><span>active</span></div>
+      <div class="avail"><span class="led"></span> OPEN TO WORK</div>
+    </div>
+  </header>
+
+  <!-- breadcrumb -->
+  <nav class="strip">
+    <div class="crumb">
+      <a class="back" href="../index.html">« HOME</a>
+      <a href="../index.html#projects">PROJECTS</a>
+      <span class="sep">/</span>
+      <span class="here">Pennyfarthing</span>
+    </div>
+  </nav>
+
+  <!-- hero -->
+  <div class="mod pj-hero" data-screen-label="project-hero">
+    <div class="mod-hd hd-rust">PENNYFARTHING.PROJ <span class="m">// deep dive</span></div>
+    <div class="mod-bd">
+      <h1 class="pj-name">Pennyfarthing</h1>
+      <p class="pj-tag">// Claude Code agent-orchestration framework — v13+</p>
+      <p class="pj-sub">A framework that turns a team of specialized AI agents into a single, coordinated engineering crew. I built it at 1898 &amp; Co., then used it to build everything else I shipped there.</p>
+      <div class="chiprow">
+        <span class="chip live">Active</span>
+        <span class="chip role">Creator &amp; Senior Engineer</span>
+        <span class="chip year">2023 — present</span>
+        <span class="chip">1898 &amp; Co. / Burns &amp; McDonnell</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pj-cols" style="margin-top:10px;">
+    <div class="col">
+
+      <div class="mod">
+        <div class="mod-hd hd-slate">THE PROBLEM</div>
+        <div class="mod-bd prose">
+          <p>One engineer prompting one AI assistant hits a ceiling fast. The context falls out of the window, behavior drifts between sessions, and there's no way for the work of one task to inform the next. For a critical-infrastructure consultancy with real engineering teams, that's not good enough.</p>
+          <p>I wanted something different: <b>a crew of specialized agents</b> that hold consistent personalities, hand work between each other along defined routes, and remember what they've done — so the whole system gets <span class="hl">more capable over a sprint, not less</span>.</p>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-teal">HOW IT WORKS</div>
+        <div class="mod-bd prose">
+          <p>Pennyfarthing is built on Claude Code and MCP. Four moving parts do the heavy lifting:</p>
+          <div class="arch">
+            <div class="archbox"><span class="at">11 Agents</span><span class="ad">specialized roles, distinct personas</span></div>
+            <div class="archbox accent"><span class="at">Prime Context</span><span class="ad">tiered context injection</span></div>
+            <div class="archbox"><span class="at">11 BikeLanes</span><span class="ad">defined handoff workflows</span></div>
+            <div class="archbox"><span class="at">Frame</span><span class="ad">real-time visibility</span></div>
+          </div>
+          <div class="archflow" style="margin-top:12px;">
+            <div class="archstep"><span class="sn">1</span><span class="sx"><b>Eleven agents</b>, each a specialist with its own persona and remit, instead of one generalist assistant.</span></div>
+            <div class="archstep"><span class="sn">2</span><span class="sx">The <b>Prime Context System</b> injects agent definition, persona, sprint state and sidecar memory in tiers — so an agent behaves the same whether it's running in the GUI or the terminal.</span></div>
+            <div class="archstep"><span class="sn">3</span><span class="sx">Eleven <b>BikeLane workflows</b> and 38 slash commands define how work routes between agents, with <b>per-agent sidecar memory</b> so each one remembers its own history.</span></div>
+            <div class="archstep"><span class="sn">4</span><span class="sx"><b>Frame</b> watches the whole thing in real time — 15 panels, browser GUI or terminal TUI.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-plum">PROVING IT WORKED</div>
+        <div class="mod-bd prose">
+          <p>The framework's first real client was itself. By dogfooding Pennyfarthing to build Pennyfarthing, the system delivered <b>4,468 commits in 12 weeks</b> — about 372 a week, or roughly <span class="hl">20× typical development velocity</span>.</p>
+          <p>To make sure that velocity wasn't noise, I benchmarked agent behavior scientifically: <b>OCEAN</b> personality profiling, the <b>TRAIL</b> evaluation framework, and Cohen's <em>d</em> effect sizes measured across <b>45 persona themes</b>.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col">
+
+      <div class="mod">
+        <div class="mod-hd hd-rust">BY THE NUMBERS</div>
+        <div class="mod-bd">
+          <div class="statgrid">
+            <div class="stat"><span class="n">4468</span><span class="l">commits / 12wk</span></div>
+            <div class="stat"><span class="n">20×</span><span class="l">velocity</span></div>
+            <div class="stat"><span class="n">11</span><span class="l">agents</span></div>
+            <div class="stat"><span class="n">38</span><span class="l">slash cmds</span></div>
+            <div class="stat"><span class="n">15</span><span class="l">live panels</span></div>
+            <div class="stat"><span class="n">45</span><span class="l">personas</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-teal">STACK</div>
+        <div class="mod-bd">
+          <div class="prior"><code>Claude Code</code><code>MCP</code><code>Python</code><code>Golang</code><code>FastAPI</code><code>uvicorn</code></div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-hd hd-mud">LINKS</div>
+        <div class="mod-bd prose">
+          <p style="font-size:12.5px;">Built for an infrastructure client — the codebase is internal. Happy to walk through the architecture in detail.</p>
+          <div class="linkrow"><a class="btn go" href="mailto:slabgorb@gmail.com">✉ Ask me about it</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="frow"><div>© 1999–2026 KEITH AVERY · AI-ASSISTED, HUMAN-APPROVED · <a href="mailto:slabgorb@gmail.com">SLABGORB@GMAIL.COM</a></div></div>
+    <div class="uc"><a href="../index.html" style="color:#9ab6e2;">« BACK TO HOME</a></div>
+  </footer>
+
+</div>
+</body>
+</html>
